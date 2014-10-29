@@ -4,8 +4,8 @@ transform_data <- function(x,fun=log,...) {
   return(r)
 }
 
-transform_log <- function(x,base=exp(1)) {
-  r <- log(x,base)
+transform_log <- function(x,add=0,base=exp(1)) {
+  r <- log(x + add,base)
   
   return(r)
 }
@@ -24,6 +24,12 @@ transform_exponentiation <- function(x,exponent=2) {
 
 transform_squareroot <- function(x) {
   r <- sqrt(x)
+  
+  return(r)
+}
+
+transform_nothing <- function(x) {
+  r <- c()
   
   return(r)
 }
