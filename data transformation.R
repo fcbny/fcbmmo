@@ -27,9 +27,3 @@ transform_squareroot <- function(x) {
   
   return(r)
 }
-
-transform_nothing <- function(x) {
-  r <- c()
-  
-  return(r)
-}
