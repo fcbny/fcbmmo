@@ -1,5 +1,14 @@
-transform_data <- function(x,fun=log,...) {
-  r <- match.fun(fun)(x,...)
+transform_datamatrix <- function(x,margin=2,fun=transform_log,...) {
+  x.class <- class(x)
+  x <- as.matrix(x)
+  
+  r <- apply(x,MARGIN=margin,FUN=match.fun(fun),...)
+  
+  if (x.class == "data.frame") {
+    r <- as.data.frame(x)
+  } else if (x.class %in% c("integer","numeric")) {
+    r <- as.vector(r)
+  }
   
   return(r)
 }
@@ -10,8 +19,8 @@ transform_log <- function(x,base=exp(1),add=0) {
   return(r)
 }
 
-transform_negExponential <- function(x) {
-  r <- exp(-1 * x)
+transform_negExponential <- function(x,a=1) {
+  r <- exp(-a * x)
   
   return(r)
 }
