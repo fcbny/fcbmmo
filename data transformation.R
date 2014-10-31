@@ -1,12 +1,12 @@
-transform_datamatrix <- function(x,margin=2,fun=transform_log,...) {
-  x.class <- class(x)
-  x <- as.matrix(x)
+transform_datamatrix <- function(dm,margin=2,fun=transform_log,...) {
+  dm.class <- class(dm)
+  dm <- as.matridm(dm)
   
-  r <- apply(x,MARGIN=margin,FUN=match.fun(fun),...)
+  r <- apply(dm,MARGIN=margin,FUN=match.fun(fun),...)
   
-  if (x.class == "data.frame") {
-    r <- as.data.frame(x)
-  } else if (x.class %in% c("integer","numeric")) {
+  if (dm.class == "data.frame") {
+    r <- as.data.frame(dm)
+  } else if (dm.class %in% c("integer","numeric")) {
     r <- as.vector(r)
   }
   
@@ -78,7 +78,11 @@ transform_boxcox <- function(x,lambda1=0,lambda2=NULL,type="1-parameter") {
     }
     
   } else if (type == "2-parameter") {
-    if (!is.null(lambda1) & !is.null(lambda2)) {
+    if (is.null(lambda2)) {
+      min(x) > -lambda2
+      lambda2 <- -min(x)
+    }
+    if (FALSE %in% (x > -lambda2)) {
       r <- twoPam_boxcox(x,lambda1=lambda1,lambda2=lambda2)
     } else {
       stop("Both lambdas must be numeric in 2-parameter boxcox")
@@ -111,7 +115,3 @@ twoPam_boxcox <- function(x,lambda1,lambda2) {
 }
 #-------------------------------------------------------------
 #-------------------------------------------------------------
-
-tesfunction <- function(x) {
-  return(x)
-}
